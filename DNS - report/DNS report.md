@@ -5,7 +5,7 @@
 * DNS ( Domain Name System) là một dịch vụ quan trọng trong hệ thống, thường được triển khai nhằm mục đích hỗ trợ cho việc phân giải tên miền (domain) sang địa chỉ IP và ngược lại
 * DNS server trong doanh nghiệp được tạo ra để phân giải một số tên miền quan trọng, giúp tăng tốc độ truy cập, đỡ tốn băng thông, hoặc phân giải một số tên miền chỉ sử dụng nội bộ vì mục đích bảo mật...
 
-VD: Một máy tính vào trình duyệt truy cập vccloud.vn, các bước sẽ là:
+* VD: Một máy tính vào trình duyệt truy cập vccloud.vn, các bước sẽ là:
    * Tìm trong file host xem có ip nào trỏ trực tiếp đến domain vccloud.vn hay không
 
    * Nếu không có, nó hỏi trong DNS server mà mình được config, DNS server này sẽ tìm trong cache của nó để trả lời, nếu có thì trả về luôn, nếu không có hoặc đã hết TTL bị xóa cache thì nó sẽ hỏi root server.
@@ -25,11 +25,16 @@ VD: Một máy tính vào trình duyệt truy cập vccloud.vn, các bước s�
 Cú pháp: 
 
 [ Tên miền ] IN SOA [ Tên server dns ] [địa chỉ email] (
-             serial number;
-             refresh number;
-             retry number;
-             expire number;
-             time to leave number;
+
+*Tabspace*serial number;
+
+*Tabspace*refresh number;
+
+*Tabspace*retry number;
+
+*Tabspace*expire number;
+
+*Tabspace*time to leave number;
 )
 
 * NS: Name server record: Cũng bắt buộc phải có nhưng không giới hạn số lượng
