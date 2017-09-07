@@ -6,10 +6,15 @@
 Kịch bản: tạo 2 máy ảo centos 7, 1 máy làm DHCP server root@dhcpserver, 1 máy làm client root@cent2
 Thực hiện
 // Đặt hostname cho DHCP server
+
 $ hostnamectl set-hostname dhcpserver
+
 //Cài đặt DHCP cho dhcp server:
+
 root@dhcpserver $ yum install dhcpd -y
+
 //Đặt IP tĩnh cho DHCP server
+
 root@dhcpserver $ vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 (Ảnh)
