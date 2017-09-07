@@ -74,12 +74,17 @@ Khai báo vị trí chứa các file cấu hình zone
 directory "/var/named/";
 ```
 Giới hạn các client được phép truy vấn DNS
-```allow-query { localhost; 192.168.25.0/24; };
+```
+allow-query { localhost; 192.168.25.0/24; };
 ```
 Sử dụng DNS đệ quy (DNS đệ quy - recursive DNS có nghĩa là nếu DNS server không thể trả lời cho một truy vấn thì nó sẽ đi hỏi các DNS server bên ngoài đến khi nào trả lời được thì thôi hoặc thông báo lỗi, DNS tương tác - interactive DNS có nghĩa là DNS sẽ trả về thông tin tốt nhất mà nó có được lúc đó mà không đi hỏin chỗ khác)
-```rucursive yes; ```
+```
+rucursive yes;
+```
 Đăng ký các slaves có thể nhận thông tin từ file cấu hình Primary DNS.
-```allow-transfer {192.168.25.50; }; ```
+```
+allow-transfer {192.168.25.50; }; 
+```
 Đây là zone mặc định khai báo các root DNS server
 ```
 zone "." IN {
@@ -88,27 +93,32 @@ file "named.ca";
 };
 ```
 
-#Khai báo zone phân giải thuận cho tên miền vccloud.vn
+Khai báo zone phân giải thuận cho tên miền vccloud.vn
+```
 zone "vccloud.vn" IN {
-#Trên primary kiểu zone là master
-type master;
-#Tên file cấu hình cho zone vccloud.vn
-file "forward.vccloud.vn";
-#Tắt chức năng dynamic update trong zone
-allow-update { none; };
+      #Trên primary kiểu zone là master
+      type master;
+      #Tên file cấu hình cho zone vccloud.vn
+      file "forward.vccloud.vn";
+      #Tắt chức năng dynamic update trong zone
+      allow-update { none; };
 };
-
-#Khai báo zone phân giải nghịch cho mạng 192.168.25.0/24
+```
+Khai báo zone phân giải nghịch cho mạng 192.168.25.0/24
+```
 zone "25.168.192.in-addr.arpa" IN {
-#Trên Primary kiểu zone là master
-type master;
-#Tên file cấu hình cho zone 168.25.192.in-addr.arpa
-file "reserve.vccloud.vn";
-#Tắt dynamic update
-allow-update { none; };
+      #Trên Primary kiểu zone là master
+      type master;
+      #Tên file cấu hình cho zone 168.25.192.in-addr.arpa
+      file "reserve.vccloud.vn";
+      #Tắt dynamic update
+      allow-update { none; };
 };
-#Gõ :wq để lưu lại và thoát
-#Kiểm tra lại file named.conf
+```
+Gõ :wq để lưu lại và thoát
+
+Kiểm tra lại file named.conf
+```
 root@cent1 $ named-checkconf /etc/named.conf
 ```
 #### Cấu hình zone
