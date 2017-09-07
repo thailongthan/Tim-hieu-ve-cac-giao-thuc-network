@@ -19,7 +19,7 @@ root@dhcpserver $ yum install dhcpd -y
 
 root@dhcpserver $ vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
-[Ảnh 1](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh1.jpg.png)
+![Ảnh 1](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh1.jpg.png)
 
 //Cấu hình DHCP server
 
@@ -27,7 +27,7 @@ root@dhcpserver $ vi /etc/dhcp/dhcpd.conf
 
 //Ở đây ta nhập thử 2 domain name là "vccloud.vn" và "svr.vccloud.vn"
 
-[Ảnh 2](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh2.jpg.png)
+![Ảnh 2](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh2.jpg.png)
 
 //Kiểm tra lại file dhcpd.conf
 
@@ -35,7 +35,7 @@ root@dhcpserver $ /usr/sbin/dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
 //Trả lại kết quả báo 2 subnet có giao nhau, nhưng vẫn thử chạy xem sao
 
-[Ảnh 3](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh3.png)
+![Ảnh 3](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh3.png)
 
 //Khởi động dịch vụ dhcp
 
@@ -47,7 +47,7 @@ root@dhcpserver $ systemctl start dhcpd
 
 root@cent2 $ vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
-[Ảnh 4](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh4.png)
+![Ảnh 4](http://congchungbuiphon.com/wp-content/uploads/2017/09/anh4.png)
 
 //Khởi động lại card mạng trên cent2 xem nhận IP là gì
 
