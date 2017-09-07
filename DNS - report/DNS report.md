@@ -66,21 +66,27 @@ Cú pháp:
 #### Cấu hình file named.conf
     root@cent1$ vi /etc/named.conf
 Khai báo địa chỉ IP sẽ tiếp nhận các yêu cầu
-    listen-on-port 53 { 127.0.0.1; 192.168.25.32; };
+```
+listen-on-port 53 { 127.0.0.1; 192.168.25.32; };
+```
 Khai báo vị trí chứa các file cấu hình zone
-    directory "/var/named/";
+```
+directory "/var/named/";
+```
 Giới hạn các client được phép truy vấn DNS
-    allow-query { localhost; 192.168.25.0/24; };
+```allow-query { localhost; 192.168.25.0/24; };
+```
 Sử dụng DNS đệ quy (DNS đệ quy - recursive DNS có nghĩa là nếu DNS server không thể trả lời cho một truy vấn thì nó sẽ đi hỏi các DNS server bên ngoài đến khi nào trả lời được thì thôi hoặc thông báo lỗi, DNS tương tác - interactive DNS có nghĩa là DNS sẽ trả về thông tin tốt nhất mà nó có được lúc đó mà không đi hỏin chỗ khác)
-    rucursive yes;
+```rucursive yes; ```
 Đăng ký các slaves có thể nhận thông tin từ file cấu hình Primary DNS.
-    allow-transfer {192.168.25.50; };
+```allow-transfer {192.168.25.50; }; ```
 Đây là zone mặc định khai báo các root DNS server
 ```
 zone "." IN {
 type hint;
 file "named.ca";
-};```
+};
+```
 
 #Khai báo zone phân giải thuận cho tên miền vccloud.vn
 zone "vccloud.vn" IN {
@@ -105,7 +111,7 @@ allow-update { none; };
 #Kiểm tra lại file named.conf
 root@cent1 $ named-checkconf /etc/named.conf
 ```
-####Cấu hình zone
+#### Cấu hình zone
 ```
 #Tạo file forward.vccloud.vn trong thư mục /var/named/
 $ vi /var/named/forward.vccloud.vn
