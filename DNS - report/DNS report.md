@@ -24,18 +24,18 @@
 
 Cú pháp: 
 
-[ Tên miền ] IN SOA [ Tên server dns ] [địa chỉ email] (
+    [ Tên miền ] IN SOA [ Tên server dns ] [địa chỉ email] (
 
-*Tabspace*serial number;
+              serial number;
 
-*Tabspace*refresh number;
+              refresh number;
 
-*Tabspace*retry number;
+              retry number;
 
-*Tabspace*expire number;
+              expire number;
 
-*Tabspace*time to leave number;
-)
+              time to leave number;
+    )
 
 * NS: Name server record: Cũng bắt buộc phải có nhưng không giới hạn số lượng
 Cú pháp:
