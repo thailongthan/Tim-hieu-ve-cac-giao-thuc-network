@@ -8,7 +8,13 @@ DHCP giúp quản lý IP một cách tự động và tập trung, tránh tình 
 
 ### 2. Các bước hoạt động
 Mô hình hoạt động
-![Ảnh 1](https://camo.githubusercontent.com/053e7de1db3fb086f807d54fd993d1f8a0060eea/687474703a2f2f692e696d6775722e636f6d2f79666b50544c782e706e67)
+
+![Ảnh](https://camo.githubusercontent.com/053e7de1db3fb086f807d54fd993d1f8a0060eea/687474703a2f2f692e696d6775722e636f6d2f79666b50544c782e706e67)
+
+* Bước 1:  Máy trạm khởi động với “địa chỉ IP rỗng” cho phép liên lạc với DHCP Servers bằng giao thức TCP/IP. Nó broadcast một thông điệp DHCP Discover chứa địa chỉ MAC và tên máy tính để tìm DHCP Server
+* Bước 2: Nếu DHCP server có cấu hình hợp lệ cho client, nó gửi thông điệp “DHCP Offer” chứa địa chỉ MAC của client, địa chỉ IP “Offer”, subnet mask, địa chỉ IP của DHCP server và thời gian hết hạn đến Client
+* Bước 3: Khi Client nhận thông điệp DHCP Offer và chấp nhận địa chỉ IP, Client sẽ gửi thông điệp DHCP Request để yêu cầu IP phù hợp cho DHCP Server
+* Bước 4: Cuối cùng, DHCP Server gửi cho client thông điệp DHCP Acknowledge để xác nhận
 
 ## II. Building a test environment
 Kịch bản: tạo 2 máy ảo centos 7, 1 máy làm DHCP server root@dhcpserver, 1 máy làm client root@cent2
