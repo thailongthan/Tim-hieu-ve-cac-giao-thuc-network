@@ -1,6 +1,8 @@
 # Báo cáo DHCP
 
 ## Lý Thuyết
+### DHCP là gì
+DHCP (Dynamic Host Configuration Protocol) là 
 
 ## Building a test environment
 Kịch bản: tạo 2 máy ảo centos 7, 1 máy làm DHCP server root@dhcpserver, 1 máy làm client root@cent2
