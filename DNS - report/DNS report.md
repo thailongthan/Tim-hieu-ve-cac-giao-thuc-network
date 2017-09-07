@@ -7,11 +7,11 @@
 
 VD: Một máy tính vào trình duyệt truy cập vccloud.vn, các bước sẽ là:
 
-*  Tìm trong file host xem có ip nào trỏ trực tiếp đến domain vccloud.vn hay không
+  * Tìm trong file host xem có ip nào trỏ trực tiếp đến domain vccloud.vn hay không
 
-*  Nếu không có, nó hỏi trong DNS server mà mình được config, DNS server này sẽ tìm trong cache của nó để trả lời, nếu có thì trả về luôn, nếu không có hoặc đã hết TTL bị xóa cache thì nó sẽ hỏi root server.
+  * Nếu không có, nó hỏi trong DNS server mà mình được config, DNS server này sẽ tìm trong cache của nó để trả lời, nếu có thì trả về luôn, nếu không có hoặc đã hết TTL bị xóa cache thì nó sẽ hỏi root server.
 
-*  Root server sẽ tách tên miền ra thành nhiều phần, ở đây là vccloud và .vn, nó sẽ đi hỏi root name server quản lý tên miền .vn (top-level-domain), sau đó root name server lại tìm trong database xem vccloud.vn ở đâu và trả về cho DNS server, DNS server lại trả về cho resolver trên máy tính để máy tính truy cập
+  * Root server sẽ tách tên miền ra thành nhiều phần, ở đây là vccloud và .vn, nó sẽ đi hỏi root name server quản lý tên miền .vn (top-level-domain), sau đó root name server lại tìm trong database xem vccloud.vn ở đâu và trả về cho DNS server, DNS server lại trả về cho resolver trên máy tính để máy tính truy cập
 
 * Primary DNS server: chứa và duy trì cơ sở dữ liệu về thông tin tên miền mà nó quản lý
 
