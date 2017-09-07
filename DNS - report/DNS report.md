@@ -38,16 +38,18 @@ Cú pháp:
     )
 
 * NS: Name server record: Cũng bắt buộc phải có nhưng không giới hạn số lượng
+
 Cú pháp:
-[Tên miền] IN NS [máy DNS server]
-A: Address record: [Tên máy tính] IN A [Địa chỉ IPv4]
-AAAA: cũng giống A nhưng dùng cho IPv6
-CNAME: Canonical name record
-Là bí danh hay tên truy cập khác của một A
-[Tên bí danh] IN CNAME [tên A record]
-MX: Mail exchange record
-Khai báo mail server
-[Tên domain] IN MX [Độ ưu tiên] [Tên mail server]
-PTR: Pointer record
-Ánh xạ từ địa chỉ sang tên, dùng cho phân giải nghịch
-[Địa chỉ IP] IN PTR [Tên máy tính]
+
+    [Tên miền] IN NS [máy DNS server]
+             A: Address record: [Tên máy tính] IN A [Địa chỉ IPv4]
+             AAAA: cũng giống A nhưng dùng cho IPv6
+             CNAME: Canonical name record
+             >Là bí danh hay tên truy cập khác của một A
+             [Tên bí danh] IN CNAME [tên A record]
+             MX: Mail exchange record
+                 Khai báo mail server
+                 [Tên domain] IN MX [Độ ưu tiên] [Tên mail server]
+             PTR: Pointer record
+                 Ánh xạ từ địa chỉ sang tên, dùng cho phân giải nghịch 
+                 [Địa chỉ IP] IN PTR [Tên máy tính]
