@@ -122,7 +122,173 @@ Kiểm tra lại file named.conf
 root@cent1 $ named-checkconf /etc/named.conf
 ```
 #### Cấu hình zone
+Tạo file forward.vccloud.vn trong thư mục /var/named/
+    
+    $ vi /var/named/forward.vccloud.vn
+Gõ i (insert) để edit
 ```
-#Tạo file forward.vccloud.vn trong thư mục /var/named/
-$ vi /var/named/forward.vccloud.vn
-#Gõ i (insert) để edit
+$TTL 1D
+
+@                   IN SOA  pridns.vccloud.vn. root.vccloud.vn. (
+0       ; serial
+1D     ; refresh
+1H     ; retry
+1W    ; expire
+3H    ; minimum
+)
+IN NS              pridns.vccloud.vn.
+IN NS              sladns.vccloud.vn.
+
+IN A                192.168.25.45
+pridns                IN A                 192.168.25.32
+sladns                IN A                 192.168.25.50
+websvr               IN A                 192.168.25.45
+
+www                  IN CNAME      websvr.vccloud.vn.
+
+```
+Gõ :wq (write-quit) để lưu lại và thoát
+
+Tạo file reverse.vccloud.vn trong thư mục /var/named/
+
+    $ vi /var/named/reverse.vccloud.vn
+Gõ i (insert) để edit
+```
+$TTL 1D
+@                   IN SOA pridns.vccloud.vn. root.vccloud.vn. (
+0       ; serial
+1D     ; refresh
+1H     ; retry
+1W    ; expire
+3H    ; minimum
+)
+
+IN NS            pridns.vccloud.vn.
+IN NS            sladns.vccloud.vn.
+32                     IN PTR          pridns.vccloud.vn.
+50                     IN PTR          sladns.vccloud.vn.
+45                     IN PTR          websvr.vccloud.vn.
+```
+Gõ :wq để lưu lại và thoát
+
+Kiểm tra lại file cấu hình zone
+
+    root@cent1 $ named-checkzone vccloud.vn /var/named/forward.vccloud.vn
+![Ảnh 1](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh1.png)
+    
+    root@cent1 $ named-checkzone 25.168.192.in-addr.arpa /var/named/reverse.vccloud.vn
+![Ảnh 2](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh2.png)
+
+#### Gán quyền, tắt firewall và chạy
+Gán quyền read và execute cho các file trong /var/named
+    
+    $ chmod -R 755 /var/named/
+Tắt firewall
+
+    $ systemctl stop firewalld
+    $ systemctl disable firewalld
+Chạy named
+```
+$ systemctl enable named
+$ systemctl start named
+```
+Setsebool
+```
+$ setsebool -P named_tcp_bind_http_port on
+$ setsebool -P named_write_master_zones on
+
+$ getsebool -a | grep named
+```
+![Ảnh 3](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh3.png)
+### Cấu hình slave DNS server
+#### Cấu hình file named.conf
+    root@cent2 $ vi /etc/named.conf
+Khai báo địa chỉ IP sẽ tiếp nhận các yêu cầu
+    
+    listen-on-port 53 { 127.0.0.1; 192.168.25.32; };
+Khai báo vị trí chứa các file cấu hình zone
+
+    directory "/var/named/";
+Giới hạn các client được phép truy vấn DNS
+
+    allow-query { localhost; 192.168.25.0/24; };
+Sử dụng DNS đệ quy 
+
+    rucursive yes;
+Đây là zone mặc định khai báo các root DNS server
+```
+zone "." IN {
+type hint;
+file "named.ca";
+};
+```
+Khai báo zone phân giải thuận cho tên miền vccloud.vn
+```
+zone "vccloud.vn" IN {
+#Trên slave kiểu zone là slave
+type slave;
+#Tên file cấu hình cho zone vccloud.vn sao chép từ primary DNS server
+file "slaves/forward.vccloud.vn";
+#Chỉ định primary DNS server để sao chép
+masters { 192.168.25.32; };
+};
+```
+Khai báo zone phân giải nghịch cho mạng 192.168.25.0/24
+```
+zone "25.168.192.in-addr.arpa" IN {
+#Trên slaves kiểu zone là slave
+type slave;
+#Tên file cấu hình cho zone 168.25.192.in-addr.arpa sao chép từ primary DNS server
+file "slaves/reserve.vccloud.vn";
+#Chỉ định primary DNS server để sao chép
+masters { 192.168.25.32; };
+};
+```
+Gõ :wq để lưu lại và thoát
+
+Kiểm tra lại file named.conf giống như đã kiểm tra trên primary DNS server
+    
+    root@cent2 $ named-checkconf /etc/named.conf
+#### Gán quyền, tắt firewall và chạy
+Gán quyền read và execute cho các file trong /var/named
+
+    $ chmod -R 755 /var/named/
+Tắt firewall
+
+    $ systemctl stop firewalld
+    $ systemctl disable firewalld
+Chạy named
+```
+$ systemctl enable named
+$ systemctl start named
+```
+Setsebool
+    
+    $ getsebool -a | grep named
+![Ảnh 4](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh4.png)
+```
+$ setsebool -P named_tcp_bind_http_port on
+$ setsebool -P named_write_master_zones on
+
+$ getsebool -a | grep named
+```
+### Kiểm tra trên host
+Cấu hình DNS server cho resolver
+
+    root@cent3 $ vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+Ấn i, Thêm dòng cấu hình DNS
+    
+    DNS1=192.168.25.32
+![Ảnh 5](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh5.png)
+Gõ :wq để lưu lại và thoát
+    
+    root@cent3 $ nslookup vccloud.vn
+![Ảnh 6](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh6.png)
+Thử với google
+
+    root@cent3 $ nslookup 8.8.8.8
+![Ảnh 7](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh7.png)
+    
+    root@cent3 $ nslookup google.com
+![Ảnh 8](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh8.png)
+**Như vậy chúng ta đã cài đặt và kiểm tra thành công DNS server – BIND9 trên centos7.** :smile:
