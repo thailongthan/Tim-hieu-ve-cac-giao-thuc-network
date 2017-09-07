@@ -1,10 +1,16 @@
 # Báo cáo DHCP
 
-## Lý Thuyết
-### DHCP là gì
-DHCP (Dynamic Host Configuration Protocol) là 
+## I. Lý Thuyết
+### 1. DHCP là gì
+DHCP (Dynamic Host Configuration Protocol) là dịch vụ tự động gán IP cho các client khi chúng vào trong mạng. Nếu không có DHCP, cấu hình IP phải được thực hiện một cách thủ công cho các máy tính mới, các máy tính di chuyển từ mạng con này sang mạng con khác, và các máy tính được loại bỏ khỏi mạng.
 
-## Building a test environment
+DHCP giúp quản lý IP một cách tự động và tập trung, tránh tình trạng trùng lặp IP
+
+### 2. Các bước hoạt động
+Mô hình hoạt động
+![Ảnh 1](https://camo.githubusercontent.com/053e7de1db3fb086f807d54fd993d1f8a0060eea/687474703a2f2f692e696d6775722e636f6d2f79666b50544c782e706e67)
+
+## II. Building a test environment
 Kịch bản: tạo 2 máy ảo centos 7, 1 máy làm DHCP server root@dhcpserver, 1 máy làm client root@cent2
 Thực hiện
 // Đặt hostname cho DHCP server
