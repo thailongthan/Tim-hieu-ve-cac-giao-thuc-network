@@ -53,3 +53,14 @@ Cú pháp:
              PTR: Pointer record
                  Ánh xạ từ địa chỉ sang tên, dùng cho phân giải nghịch 
                  [Địa chỉ IP] IN PTR [Tên máy tính]
+## Cài đặt Test Environment: BIND9
+### Kịch bản
+* 3 máy ảo centos7, trong đó tạo 1 primary DNS server (hostname cent1), 1 slave DNS server (hostname cent2) và 1 client (hostname cent3), môi trường mạng ở công ty, các máy ảo dùng card mạng Bridge và Internal phòng khi Bridge bị lỗi.
+  * IP của cent1: 192.168.25.32
+  * IP của cent2: 192.168.25.50
+  * IP của cent3: 192.168.25.45
+* Mở 3 tab terminal trên máy thật và ssh đến các máy ảo: root@cent1, root@cent2, root@cent3
+### Cài đặt BIND9 trên cent1 và cent2
+    $ yum install bind bind-utils
+### Cấu hình Primary DNS server
+#### Cấu hình file named.conf
