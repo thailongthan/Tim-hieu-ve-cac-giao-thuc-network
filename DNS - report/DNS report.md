@@ -1,7 +1,7 @@
 
 # DNS SERVER – BIND9 
-## Lý thuyết
-### Khái niệm
+## I. Lý thuyết
+### 1. Khái niệm
 * DNS ( Domain Name System) là một dịch vụ quan trọng trong hệ thống, thường được triển khai nhằm mục đích hỗ trợ cho việc phân giải tên miền (domain) sang địa chỉ IP và ngược lại
 * DNS server trong doanh nghiệp được tạo ra để phân giải một số tên miền quan trọng, giúp tăng tốc độ truy cập, đỡ tốn băng thông, hoặc phân giải một số tên miền chỉ sử dụng nội bộ vì mục đích bảo mật...
 
@@ -53,17 +53,17 @@ Cú pháp:
              PTR: Pointer record
                  Ánh xạ từ địa chỉ sang tên, dùng cho phân giải nghịch 
                  [Địa chỉ IP] IN PTR [Tên máy tính]
-## Cài đặt Test Environment: BIND9
-### Kịch bản
+## II. Cài đặt Test Environment: BIND9
+### 1. Kịch bản
 * 3 máy ảo centos7, trong đó tạo 1 primary DNS server (hostname cent1), 1 slave DNS server (hostname cent2) và 1 client (hostname cent3), môi trường mạng ở công ty, các máy ảo dùng card mạng Bridge và Internal phòng khi Bridge bị lỗi.
   * IP của cent1: 192.168.25.32
   * IP của cent2: 192.168.25.50
   * IP của cent3: 192.168.25.45
 * Mở 3 tab terminal trên máy thật và ssh đến các máy ảo: root@cent1, root@cent2, root@cent3
-### Cài đặt BIND9 trên cent1 và cent2
+### 2. Cài đặt BIND9 trên cent1 và cent2
     $ yum install bind bind-utils
-### Cấu hình Primary DNS server
-#### Cấu hình file named.conf
+### 3. Cấu hình Primary DNS server
+#### a. Cấu hình file named.conf
     root@cent1$ vi /etc/named.conf
 Khai báo địa chỉ IP sẽ tiếp nhận các yêu cầu
 ```
@@ -121,7 +121,7 @@ Kiểm tra lại file named.conf
 ```
 root@cent1 $ named-checkconf /etc/named.conf
 ```
-#### Cấu hình zone
+#### b. Cấu hình zone
 Tạo file forward.vccloud.vn trong thư mục /var/named/
     
     $ vi /var/named/forward.vccloud.vn
@@ -179,7 +179,7 @@ Kiểm tra lại file cấu hình zone
     root@cent1 $ named-checkzone 25.168.192.in-addr.arpa /var/named/reverse.vccloud.vn
 ![Ảnh 2](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh2.png)
 
-#### Gán quyền, tắt firewall và chạy
+#### c. Gán quyền, tắt firewall và chạy
 Gán quyền read và execute cho các file trong /var/named
     
     $ chmod -R 755 /var/named/
@@ -200,8 +200,8 @@ $ setsebool -P named_write_master_zones on
 $ getsebool -a | grep named
 ```
 ![Ảnh 3](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh3.png)
-### Cấu hình slave DNS server
-#### Cấu hình file named.conf
+### 4. Cấu hình slave DNS server
+#### a. Cấu hình file named.conf
     root@cent2 $ vi /etc/named.conf
 Khai báo địa chỉ IP sẽ tiếp nhận các yêu cầu
     
@@ -249,7 +249,7 @@ Gõ :wq để lưu lại và thoát
 Kiểm tra lại file named.conf giống như đã kiểm tra trên primary DNS server
     
     root@cent2 $ named-checkconf /etc/named.conf
-#### Gán quyền, tắt firewall và chạy
+#### b. Gán quyền, tắt firewall và chạy
 Gán quyền read và execute cho các file trong /var/named
 
     $ chmod -R 755 /var/named/
@@ -272,18 +272,21 @@ $ setsebool -P named_write_master_zones on
 
 $ getsebool -a | grep named
 ```
-### Kiểm tra trên host
+### 5. Kiểm tra trên host
 Cấu hình DNS server cho resolver
 
     root@cent3 $ vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+    
 Ấn i, Thêm dòng cấu hình DNS
     
     DNS1=192.168.25.32
 ![Ảnh 5](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh5.png)
+
 Gõ :wq để lưu lại và thoát
     
     root@cent3 $ nslookup vccloud.vn
 ![Ảnh 6](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh6.png)
+
 Thử với google
 
     root@cent3 $ nslookup 8.8.8.8
@@ -291,4 +294,5 @@ Thử với google
     
     root@cent3 $ nslookup google.com
 ![Ảnh 8](http://congchungbuiphon.com/wp-content/uploads/2017/09/dns-anh8.png)
+
 **Như vậy chúng ta đã cài đặt và kiểm tra thành công DNS server – BIND9 trên centos7.** :smile:
