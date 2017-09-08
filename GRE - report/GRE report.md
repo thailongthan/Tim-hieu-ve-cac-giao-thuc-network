@@ -28,8 +28,18 @@ mGRE dùng giao thức NHRP (Next Hop Resolution Protocol) ánh xạ từ địa
 ### 4. Kết hợp GRE và IPSec
 #### a. Khái niệm IPSec
 IPSec là viết tắt của IP Security, là giao thức giúp xác thực và mã hóa cho mỗi gói tin IP trong quá trình truyền thông, điều khiển truy nhập, bảo mật
+
 IPSec được sử dụng như một chức năng xác thực và được gọi là Authentication Hearder (AH).
+
 Được dùng trong việc chứng thực/mã hóa, kết hợp chức năng(authentication và integrity) gọi là Encapsulating Security Payload (ESP).
+
 Đảm bảo tính nguyên vẹn của dữ liệu.
+
 Chống quá trình replay trong các phiên bảo mật.
-Trong các phạm vi sử dụng của Ipsec thì việc xác thực và mã hóa được chú ý và quan tâm nhiều nhất khi ứng dụng trên các mạng riêng ảo (VPN). Để đảm bảo tính bảo mật cao cho người sử dụng.
+
+Trong các phạm vi sử dụng của Ipsec thì việc xác thực và mã hóa được chú ý và quan tâm nhiều nhất khi ứng dụng trên các mạng riêng ảo (VPN) để đảm bảo tính bảo mật cao cho người sử dụng.
+#### b. GRE over IPSec
+GRE không bảo mật nên cần kết hợp cùng IPSec để tăng tính bảo mật cho kênh truyền
+
+IPSec khi kết hợp cùng GRE sẽ được khả năng định tuyến động trên kênh truyền, giúp tạo ra khả năng mở rộng hệ thống mạng
+#### c. Cơ chế GRE over IPSec
