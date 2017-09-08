@@ -1,4 +1,6 @@
 # GIAO THỨC ICMP - BÁO CÁO
 
 ## I. Lý thuyết
-### nghĩa
+
+### 1. ĐỊNH NGHĨA
+
