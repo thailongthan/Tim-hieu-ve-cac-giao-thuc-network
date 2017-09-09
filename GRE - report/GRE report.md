@@ -46,5 +46,6 @@ IPSec khi kết hợp cùng GRE sẽ được khả năng định tuyến độn
 Các gói tin GRE được truyền thông đi qua kênh truyền bảo mật do IPSec thiết lập, điều này thực hiện được là do IPSec đóng gói và thêm các thông tin bảo mật của mình vào gói tin GRE 
  
 IP packet ban đầu được đóng gói bởi GRE header sau đó IPSec sẽ thêm các thông tin IPSec header để cung cấp thêm các tính năng bảo mật rồi mới truyền gói tin đi. Khi gói tin đến đích thì quá trình bóc tách sẽ diễn ra ngược lại 
+
 GRE over IPSec có 2 chế độ hoạt động: Tunnel mode và Transport mode 
 ![Ảnh 4](http://img1.51cto.com/attachment/201205/174346171.png)
