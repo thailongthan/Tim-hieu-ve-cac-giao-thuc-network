@@ -13,7 +13,7 @@ Cuối cùng, VLAN được quyết định làm việc theo cách tương tự 
  
 * Create VXLAN device 
 
-    $ ip link add vxlan0 type vxlan id 42 group 239.1.1.1 dev eth1 dstport 4789 
+      $ ip link add vxlan0 type vxlan id 42 group 239.1.1.1 dev eth1 dstport 4789 
  
 Câu lệnh trên sẽ tạo mới một thiết bị có tên là vxlan0. Thiết bị này sử dụng multicast group 239.1.1.1 qua card mạng eth1 để kiểm soát xử lý lưu lượng: nếu không có bản ghi nào trong bảng forwarding table thì nó sẽ gửi multicast request để tìm nạp dữ liệu vào giống như trong LAN 
  
