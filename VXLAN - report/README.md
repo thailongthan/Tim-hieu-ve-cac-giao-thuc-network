@@ -12,32 +12,33 @@ Không giống với hầu hết các tunnels khác, một VXLAN là một mạn
 Cuối cùng, VLAN được quyết định làm việc theo cách tương tự như 2 giao thức gần nhất với nó là GRE và VLAN. Việc thiết lập VXLAN yêu cầu iproute version 2 - khớp với phiên bản kernel mà VXLAN lần đầu "lên sóng" 
  
 * Create VXLAN device 
-
-       $ ip link add vxlan0 type vxlan id 42 group 239.1.1.1 dev eth1 dstport 4789 
- 
+```
+$ ip link add vxlan0 type vxlan id 42 group 239.1.1.1 dev eth1 dstport 4789 
+```
 Câu lệnh trên sẽ tạo mới một thiết bị có tên là vxlan0. Thiết bị này sử dụng multicast group 239.1.1.1 qua card mạng eth1 để kiểm soát xử lý lưu lượng: nếu không có bản ghi nào trong bảng forwarding table thì nó sẽ gửi multicast request để tìm nạp dữ liệu vào giống như trong LAN 
  
 Cổng đích được đặt một giá trị IANA-assigned là 4789. VXLAN được Linux thực thi trước khi IANA chọn ra một cổng đích tiêu chuẩn và sử dụng gía trị Linux đã chọn làm mặc định để đảm bảo tính tương thích ngược sau này. 
  
 * Xóa một vxlan device 
-
-       $ ip link delete vxlan0 
- 
+```
+$ ip link delete vxlan0 
+``` 
 * Show vxlan info 
+```
+ $ ip -d link show vxlan0 
+``` 
+### Có thể tạo, hủy và hiển thị bảng vxlan forwarding table sử dụng một bridge command mới 
 
-       $ ip -d link show vxlan0 
- 
-Có thể tạo, hủy và hiển thị bảng vxlan forwarding table sử dụng một bridge command mới 
-
-* Thêm 1 bản ghi vào forwarding table 
-
+* Thêm 1 bản ghi vào forwarding table
+```
        $ bridge fdb add to 00:17:42:8a:b4:05 dst 192.19.0.2 dev vxlan0   
- 
+ ```
 * Xóa một bản ghi trong forwarding table 
-
+```
        $bridge fdb delete 00:17:42:8a:b4:05 dev vxlan0   
- 
+ ```
 * Hiển thị bảng forwarding table 
-
+```
        $ bridge fdb show dev vxlan0 
  
+```
