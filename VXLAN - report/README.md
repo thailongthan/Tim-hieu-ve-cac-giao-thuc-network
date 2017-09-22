@@ -1,5 +1,7 @@
 
 # VXLAN – Virtual eXtensible Local Aria Network – Mạng LAN ảo mở rộng 
+
+## VXLAN - Documentation
  
 Giao thức VXLAN là một giao thức tunnetling được thiết kế để giải quyết vấn đề giới hạn VLAN IDs (2 ^ 12 = 4096) trong chuẩn IEE 802.1q. Với VXLAN, độ dài của IDs có thể mở rộng lên 24 bit (16777216) 
  
